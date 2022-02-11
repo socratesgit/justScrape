@@ -23,13 +23,6 @@ for town,url in queries.items():
     html = session.get("https://www.justeat.it/area/{}".format(url),headers=headers)
     soup = BeautifulSoup(html.text,features="html.parser")
     canonical = soup.find("link",{"rel":"canonical"})
-    if canonical:
-        html = session.get("https://www.justeat.it/area/{}".format(url),headers=headers)
-        soup = BeautifulSoup(html.text,features="html.parser")
-    with open("pagina{}.html".format(town),"w") as f:
-        f.write(html.text)
-
-    print(town+"///"+url)
 
     for restaurant_info in soup.find_all("section", {"data-test-id" : "restaurant"}):
         
@@ -77,7 +70,7 @@ for town,url in queries.items():
         }) 
 
 
-with open('data3.json', 'a', encoding='utf-8') as f:
+with open('data.json', 'a', encoding='utf-8') as f:
     json.dump(list_restaurant, f,ensure_ascii=True,indent=4)
 
     
